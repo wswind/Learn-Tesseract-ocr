@@ -15,31 +15,15 @@ namespace TessOcrWebApi.Controllers
     [Route("[controller]")]
     public class OcrController : ControllerBase
     {
-       
         public OcrController()
         {
           
         }
-        ///// <summary>
-        ///// 获得Post过来的数据  
-        ///// </summary>
-        ///// <returns></returns>
-        //private async Task<string> GetPostStr(HttpRequest request)
-        //{
-        //    using (var sr = new StreamReader(request.Body, Encoding.UTF8))
-        //    {
-        //        var body = await sr.ReadToEndAsync();
-        //        return body;
-        //    }
-        //}
         [HttpPost]
         public ActionResult Post([FromBody]ImgData imgData)
         {
             string rootDirectory = AppContext.BaseDirectory;
-
             string filePath = Base64BitmapUtil.SaveLocal(imgData.Base64);
-           
-            //string filePath = $"{rootDirectory}tessdata\\01.png";
             string tessDataPath = $"{rootDirectory}tessdata";
             using (var engine = new TesseractEngine(tessDataPath, "chi_sim", EngineMode.Default))
             {
